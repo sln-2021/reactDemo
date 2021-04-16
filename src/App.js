@@ -62,6 +62,22 @@ class App extends React.Component {
                     return <Route key={key} path={route.path} component={route.component} />;
                   }
                 })}
+                {/* 嵌套路由 */}
+                {/* {
+                  router.map((item,key)=>{
+                        if(item.exact){
+                          return <Route key={key} exact path={item.path} render={props=>( 
+                                    <item.component {...props} routes={item.routes} />
+                            )}> 
+                          </Route>
+                        }else{
+                          return <Route key={key}  path={item.path} render={props=>( 
+                                    <item.component {...props} routes={item.routes} />
+                            )}> 
+                        </Route>
+                        }
+                  })
+                } */}
               </div>
             </Content>
           </Layout>
