@@ -26,7 +26,7 @@ export default class layouts extends Component {
         <Layout className='site-layout'>
           <Header collapsed={this.state.collapsed} toggle={this.toggle} />
           <Content /> 
-          <Footer style={{ textAlign: 'center', color: '#000' }}>小仙女~~~</Footer>
+          <Footer style={{ textAlign: 'center', color: '#000' }}>啾咪~小仙女的系统</Footer>
         </Layout> 
       </Layout>
     );
