@@ -52,7 +52,7 @@ class Contents extends Component {
                     <Route path="/home1" component={SuspenseComponent(Home1)} />
                     <Route path="/home2" component={SuspenseComponent(Home2)} />
                     <Route path="/welcome" component={SuspenseComponent(Welcome)} />
-                    <Redirect to="/home" from="/" />
+                    <Redirect to="/home1" from="/" />
                     <Route component={SuspenseComponent(NotFound)} />
                 </Switch>
             </Content>
