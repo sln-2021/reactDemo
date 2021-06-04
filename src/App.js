@@ -1,91 +1,33 @@
-import React from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { DesktopOutlined, PieChartOutlined, FileOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Home from './components/home';
-import Welcome from './components/welcome';
-import Detail from './components/detail';
-import routes from './router/router';
-const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
-
-class App extends React.Component {
-  state = {
-    collapsed: false,
-    pathLocation: '',
-  };
-
-  onCollapse = (collapsed) => {
-    this.setState({ collapsed });
-  };
-
-  handleClick = (e) => {
-    this.setState({ pathLocation: e.key });
-  };
-
-  render() {
-    const { collapsed, pathLocation } = this.state;
+import React, { Component, lazy, Suspense } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+const Login = lazy(() => import ("./pages/login/index"))
+const NotFound = lazy(() => import("./pages/404/index"))
+const Layouts = lazy(() => import('./pages/Layout/index'));
+const SuspenseComponent = (Component) => (props) => {
+  return (
+    <Suspense
+      fallback={
+        <div style={{ color: '#000', fontSize: '20px', padding: '30px' }}>
+          <LoadingOutlined  style={{textAlign: 'center'}}/>
+          &nbsp;&nbsp;&nbsp;Loading...
+        </div>
+      }>
+      <Component {...props}></Component>
+    </Suspense>
+  );
+};
+class App extends Component {
+render() {
     return (
       <Router>
-        <Layout style={{ minHeight: '100vh' }}>
-          {/* Sider侧边栏 */}
-          <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse} theme='light'>
-            {/* logo图片 */}
-            <div style={{ height: 32, margin: 16, background: '#EFF8FB' }} />
-            {/* 左侧导航区域 */}
-            <Menu theme='light' defaultSelectedKeys={['home']} mode='inline' onClick={this.handleClick}>
-              <Menu.Item key='home' icon={<PieChartOutlined />}>
-                <Link to='/'>home</Link>
-              </Menu.Item>
-              <Menu.Item key='welcome' icon={<DesktopOutlined />}>
-                <Link to='/welcome'>welcome</Link>
-              </Menu.Item>
-              <Menu.Item key='detail' icon={<UserOutlined />} title='User'>
-                <Link to='/detail'>detail</Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
-          {/* 右侧connect内容 */}
-          <Layout className='site-layout'>
-            <Header className='site-layout-background' style={{ padding: 0 }} />
-            <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>主页</Breadcrumb.Item>
-                <Breadcrumb.Item>{`${pathLocation}` ? `${pathLocation}` : 'home'}</Breadcrumb.Item>
-              </Breadcrumb>
-              <div className='site-layout-background' style={{ padding: 24, minHeight: 360 }}>
-                {/* 组件导航路由 */}
-                {routes.map((route, key) => {
-                  if (route.exact) {
-                    return <Route key={key} exact path={route.path} component={route.component} />;
-                  } else {
-                    return <Route key={key} path={route.path} component={route.component} />;
-                  }
-                })}
-                {/* 嵌套路由 */}
-                {/* {
-                  router.map((item,key)=>{
-                        if(item.exact){
-                          return <Route key={key} exact path={item.path} render={props=>( 
-                                    <item.component {...props} routes={item.routes} />
-                            )}> 
-                          </Route>
-                        }else{
-                          return <Route key={key}  path={item.path} render={props=>( 
-                                    <item.component {...props} routes={item.routes} />
-                            )}> 
-                        </Route>
-                        }
-                  })
-                } */}
-              </div>
-            </Content>
-          </Layout>
-                
-        </Layout>
+        <Switch>
+          <Route path='/login' component={SuspenseComponent(Login)} />
+          <Route path='/' component={SuspenseComponent(Layouts)}></Route>
+          <Route component={SuspenseComponent(NotFound)} />
+        </Switch>
       </Router>
     );
   }
 }
-
-export default App;
+export default (App);
