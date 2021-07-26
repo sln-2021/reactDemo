@@ -14,7 +14,7 @@ class Menus extends Component {
       return menuData.map((item) => {  
         if (item.children && item.children.length > 0) {
           return (
-            <SubMenu key={item.path} icon={item.icon} title={item.title} style={{ color: 'red' }}>
+            <SubMenu key={item.path} icon={item.icon} title={item.title}>
               {siderNavigation(item.children)}
             </SubMenu>
           );
