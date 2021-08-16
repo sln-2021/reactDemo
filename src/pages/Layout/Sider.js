@@ -3,10 +3,11 @@ import { withRouter } from 'react-router-dom';
 import styles from './index.less';
 import Menu from './Menu/Menu';
 import { Layout } from 'antd';
-import img from '../../assets/icon/logo.png';
+import logo from '../../assets/ceshi.jpg';
+
 const { Sider } = Layout;
 class Asider extends Component {
-render() {
+  render() {
     return (
       <Sider
         trigger={null}
@@ -20,12 +21,12 @@ render() {
           background: 'white',
         }}>
         <div className='logo' style={{ display: 'flex', height: 64, padding: 10, boxSizing: 'border-box' }}>
-          <img src='../../assets/icon/logo.png' alt='' style={{ width: 44, height: 44 }} />
-          <span style={{ lineHeight: 3, fontSize: 16, marginLeft: 15, display:!this.props.collapsed ? 'block' : 'none' }}>后台管理系统</span>
+          <img src={logo} alt='' style={{ width: 44, height: 44 }} className={styles.logo} />
+          <span style={{ lineHeight: 3, fontSize: 16, marginLeft: 15, display: !this.props.collapsed ? 'block' : 'none' }}>后台管理系统</span>
         </div>
         <Menu />
       </Sider>
     );
-}
+  }
 }
 export default withRouter(Asider);
